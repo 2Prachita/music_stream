@@ -11,3 +11,4 @@ dbt_project/logs/
 .user.yml
 dbt_project/profiles.yml
 .DS_Store
+scratch/

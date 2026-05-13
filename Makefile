@@ -37,10 +37,10 @@ kafka-down:
 	docker compose down
 
 kafka-topics:
-	docker exec kafka kafka-topics.sh --list --bootstrap-server localhost:9092
+	docker exec kafka /usr/bin/kafka-topics --list --bootstrap-server localhost:9092
 
 kafka-verify:
-	docker exec kafka kafka-console-consumer.sh \
+	docker exec kafka kafka-console-consumer \
 		--bootstrap-server localhost:9092 \
 		--topic play-events \
 		--from-beginning \

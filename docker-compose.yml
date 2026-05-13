@@ -41,30 +41,40 @@ services:
       timeout: 10s
       retries: 10
 
-  # Auto-creates our topics when Kafka starts
   kafka-setup:
     image: confluentinc/cp-kafka:7.5.0
     container_name: kafka-setup
     depends_on:
       kafka:
         condition: service_healthy
-    entrypoint: ["/bin/bash", "-c"]
-    command: |
-      "
-      echo 'Creating Kafka topics...'
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        echo "Waiting for Kafka..."
+        sleep 15
 
-      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists \
-        --topic play-events \
-        --partitions 3 \
-        --replication-factor 1 \
-        --config retention.ms=604800000
+        echo "Creating play-events topic..."
+        kafka-topics \
+          --bootstrap-server kafka:29092 \
+          --create \
+          --if-not-exists \
+          --topic play-events \
+          --partitions 3 \
+          --replication-factor 1 \
+          --config retention.ms=604800000
 
-      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists \
-        --topic skip-events \
-        --partitions 3 \
-        --replication-factor 1 \
-        --config retention.ms=604800000
+        echo "Creating skip-events topic..."
+        kafka-topics \
+          --bootstrap-server kafka:29092 \
+          --create \
+          --if-not-exists \
+          --topic skip-events \
+          --partitions 3 \
+          --replication-factor 1 \
+          --config retention.ms=604800000
 
-      echo 'Topics created:'
-      kafka-topics --bootstrap-server kafka:29092 --list
-      "
+        echo "Topics created:"
+        kafka-topics \
+          --bootstrap-server kafka:29092 \
+          --list
