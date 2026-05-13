@@ -1,0 +1,13 @@
+.env
+set_env.sh
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+/tmp/checkpoints/
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+.user.yml
+dbt_project/profiles.yml
+.DS_Store
