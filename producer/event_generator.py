@@ -171,10 +171,26 @@ class PlayEventGenerator:
         return PlayEvent(
             event_id    = PlayEvent.make_event_id(),
             user_id     = random.choice(USER_IDS),
-            track_id    = track.get("track_id", "unknown"),
-            track_name  = track.get("track_name", "Unknown"),
-            artist_id   = track.get("artist_id", "unknown"),
-            artist_name = track.get("artist_name", "Unknown"),
+            track_id = (
+                track.get("track_id")
+                or track.get("id")
+                or str(uuid.uuid4())
+            ),
+            track_name = (
+                track.get("track_name")
+                or track.get("name")
+                or "Unknown Track"
+            ),
+            artist_name = (
+                track.get("artist_name")
+                or track.get("primary_artist_name")
+                or track.get("artist")
+                or "Unknown Artist"
+            ),
+            artist_id = (
+                track.get("artist_id")
+                or track.get("primary_artist_id")
+            ), 
             duration_ms = track.get("duration_ms", 210000) or 210000,
             played_ms   = played_ms,
             skipped     = skipped,
